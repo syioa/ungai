@@ -2,14 +2,7 @@ mod markov_chain;
 use markov_chain::Markov;
 
 fn main() {
-    let names = vec![
-        "alice",
-        "alina",
-        "alex",
-        "anna",
-        "amelia",
-        "aria",
-    ];
+    let names = vec!["alice", "alina", "alex", "anna", "amelia", "aria"];
 
     let markov = Markov::train(&names);
 
@@ -17,6 +10,6 @@ fn main() {
 
     for _ in 0..10 {
         let name = markov.generate(&mut rng);
-        println!("Name generated: {} | Length: {}", name, name.len());
+        println!("Name generated: {}\nLength: {}\n", name, name.len());
     }
 }

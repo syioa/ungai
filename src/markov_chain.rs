@@ -1,7 +1,7 @@
 use ndarray::{Array2, Axis};
-use rand::prelude::*;
-use rand::distr::weighted::WeightedIndex;
 use rand::distr::Distribution;
+use rand::distr::weighted::WeightedIndex;
+use rand::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 pub struct Markov {
@@ -93,4 +93,3 @@ impl Markov {
         result
     }
 }
-
