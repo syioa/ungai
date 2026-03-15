@@ -10,6 +10,11 @@ fn main() {
 
     for _ in 0..10 {
         let name = markov.generate(&mut rng);
+
+        if name.len() < 2 {
+            continue;
+        }
+
         println!("Name generated: {}\nLength: {}\n", name, name.len());
     }
 }
