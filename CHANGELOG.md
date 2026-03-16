@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.1.0 - 2026-03-16
+#### Features
+- add smoothing to Order-2 Markov training function - (c4c22e7) - syioa
+- implement 2nd order Markov Chain - (c63c16d) - syioa
+#### Refactoring
+- (**order2**) hoist distribution generation out of a loop - (14e3d06) - syioa
+- reorganize code for implementing other n-gram markov chains - (d74b9a7) - syioa
+
+- - -
+
 ## 0.0.3 - 2026-03-16
 #### Performance Improvements
 - hoist WeightedIndex creation out of generation loop - (24aaf05) - syioa
