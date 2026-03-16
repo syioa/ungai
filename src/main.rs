@@ -3,7 +3,7 @@ use markov_chain::order2;
 
 fn main() {
     let names = vec!["alice", "alina", "alex", "anna", "amelia", "aria"];
-    let markov = order2::Markov::train(&names);
+    let markov = order2::Markov::train(&names, 0.0);
     let mut rng = rand::rng();
 
     for _ in 0..10 {
