@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.0.3 - 2026-03-16
+#### Performance Improvements
+- hoist WeightedIndex creation out of generation loop - (24aaf05) - syioa
+
+- - -
+
 ## 0.0.2 - 2026-03-15
 #### Features
 - basic implementation of markov chain - (eae8f86) - syioa
