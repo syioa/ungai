@@ -4,10 +4,11 @@ use markov_chain::Markov;
 fn main() {
     let names = vec!["alice", "alina", "alex", "anna", "amelia", "aria"];
     let markov = Markov::train(&names);
+    let distributions = markov.precompute_distributions();
     let mut rng = rand::rng();
 
     for _ in 0..10 {
-        let name = markov.generate(&mut rng);
+        let name = markov.generate(&mut rng, &distributions);
 
         if name.len() < 2 {
             continue;

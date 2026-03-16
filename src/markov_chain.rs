@@ -38,14 +38,27 @@ impl Markov {
         Self { matrix }
     }
 
-    pub fn generate(&self, rng: &mut impl Rng) -> String {
+    pub fn precompute_distributions(&self) -> Vec<Option<WeightedIndex<f64>>> {
+        self.matrix
+            .axis_iter(Axis(0))
+            .map(|row| WeightedIndex::new(row.to_vec()).ok())
+            .collect()
+    }
+
+    pub fn generate(
+        &self,
+        rng: &mut impl Rng,
+        distributions: &Vec<Option<WeightedIndex<f64>>>,
+    ) -> String {
         let mut result = String::new();
         let mut current = b'^' as usize;
 
         loop {
-            let probs = self.matrix.row(current);
-            let dist = WeightedIndex::new(probs.to_vec()).unwrap();
-            let next = dist.sample(rng);
+            let next = if let Some(dist) = &distributions[current] {
+                dist.sample(rng)
+            } else {
+                b'$' as usize
+            };
 
             if next == b'$' as usize {
                 break;
