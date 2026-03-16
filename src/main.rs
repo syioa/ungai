@@ -1,5 +1,5 @@
 mod markov_chain;
-use markov_chain::Markov;
+use markov_chain::order1::Markov;
 
 fn main() {
     let names = vec!["alice", "alina", "alex", "anna", "amelia", "aria"];
