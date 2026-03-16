@@ -38,22 +38,36 @@ impl Markov {
         Self { transitions }
     }
 
-    pub fn generate(&self, rng: &mut impl rand::Rng) -> String {
+    pub fn precompute_distributions(&self) -> HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)> {
+        let mut distributions = HashMap::new();
+
+        for (&state, inner_counts) in &self.transitions {
+            let mut choices = Vec::new();
+            let mut weights = Vec::new();
+
+            for (&c, &weight) in inner_counts {
+                choices.push(c);
+                weights.push(weight);
+            }
+
+            if let Ok(dist) = WeightedIndex::new(weights) {
+                distributions.insert(state, (choices, dist));
+            }
+        }
+
+        distributions
+    }
+
+    pub fn generate(&self, rng: &mut impl rand::Rng, distributions: &HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)>) -> String {
         let mut result = String::new();
         let mut p1 = b'^';
         let mut p2 = b'^';
 
         loop {
-            let next_map = match self.transitions.get(&(p1, p2)) {
-                Some(map) => map,
+            let (choices, dist) = match distributions.get(&(p1, p2)) {
+                Some(data) => data,
                 None => break,
             };
-
-            // Convert frequency map to WeightedIndex
-            let choices: Vec<u8> = next_map.keys().cloned().collect();
-            let weights: Vec<f64> = next_map.values().cloned().collect();
-            
-            let dist = WeightedIndex::new(&weights).unwrap();
             let next = choices[dist.sample(rng)];
 
             if next == b'$' { break; }
