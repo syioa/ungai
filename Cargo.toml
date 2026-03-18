@@ -2,6 +2,9 @@
 name = "ungai"
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
+description = "A unique name generator based on Markov Chain"
+repository = "https://github.com/syioa/ungai"
 
 [dependencies]
 clap = { version = "4.6.0", features = ["derive"] }
