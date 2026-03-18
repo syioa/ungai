@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.2.0 - 2026-03-18
+#### Features
+- add cli support - (e7971ce) - syioa
+#### Build system
+- (**deps**) add clap crate - (3ce05c4) - syioa
+#### Miscellaneous Chores
+- update Cargo.toml to include fields necessary for publishing to crates.io - (326727b) - syioa
+- updated README.md - (60c9457) - syioa
+
+- - -
+
 ## 0.1.0 - 2026-03-16
 #### Features
 - add smoothing to Order-2 Markov training function - (c4c22e7) - syioa
