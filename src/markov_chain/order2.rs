@@ -72,6 +72,15 @@ impl Markov {
         Ok(())
     }
 
+    pub fn read_transitions_from(file_name: &str) -> bincode::Result<Self> {
+        let compressed = fs::read(file_name)?;
+
+        let decompressed = zstd::decode_all(&compressed[..])?;
+
+        let data: Markov = bincode::deserialize(&decompressed)?;
+        Ok(data)
+    }
+
     pub fn generate(&self, rng: &mut impl rand::Rng, distributions: &HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)>) -> String {
         let mut result = String::new();
         let mut p1 = b'^';

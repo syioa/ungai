@@ -35,13 +35,34 @@ struct Args {
     /// but you are free to choose whatever you want.
     #[arg(short, long, verbatim_doc_comment)]
     write_transitions: Option<String>,
+
+    /// Whether to read transitions from a file for better performance
+    ///
+    /// This flag requires you to specify the name of the file
+    /// which contains the data.
+    #[arg(short, long, verbatim_doc_comment)]
+    read_transitions: Option<String>,
 }
 
 fn main() -> Result<(), String> {
     let args = Args::parse();
 
-    let names = vec!["alice", "alina", "alex", "anna", "amelia", "aria"];
-    let markov = order2::Markov::train(&names, args.smoothing);
+    let markov: order2::Markov;
+    match args.read_transitions {
+        Some(file_name) => {
+            match order2::Markov::read_transitions_from(&file_name) {
+                Ok(data) => markov = data,
+                Err(e) => {
+                    eprintln!("can't read from file due to the following error:");
+                    return Err(e.to_string());
+                }
+            }
+        },
+        None => {
+            let names = vec!["alice", "alina", "alex", "anna", "amelia", "aria"];
+            markov = order2::Markov::train(&names, args.smoothing);
+        },
+    }
 
     // write transitions to a file
     if let Some(file_name) = args.write_transitions {
