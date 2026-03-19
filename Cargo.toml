@@ -7,6 +7,9 @@ description = "A unique name generator based on Markov Chain"
 repository = "https://github.com/syioa/ungai"
 
 [dependencies]
+bincode = "3.0.0"
 clap = { version = "4.6.0", features = ["derive"] }
 ndarray = "0.17.2"
 rand = "0.10.0"
+serde = { version = "1.0.228", features = ["derive"] }
+zstd = "0.13.3"
