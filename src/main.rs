@@ -9,29 +9,31 @@ use markov_chain::order2;
 struct Args {
     /// Defines how much smoothing to use for the Markov Chain
     /// 
-    /// Higher smoothing = more creativity
-    ///
-    /// Lower smoothing = more accuracy
+    /// Higher Smoothing = More Creativity
+    /// Lower Smoothing = More Accuracy
     /// 
     /// Remember that more accuracy with lower smoothing
     /// is entirely dependent on the quality of the provided dataset.
-    #[arg(short, long, default_value_t=0.0)]
+    #[arg(short, long, default_value_t=0.0, verbatim_doc_comment)]
     smoothing: f64,
 
-    /// Weather to generate a name or not. Default is false
-    #[arg(short, long, default_value_t=false)]
+    /// Weather to generate a name or not
+    ///
+    /// [default: false]
+    #[arg(short, long, default_value_t=false, verbatim_doc_comment)]
     generate: bool,
 
     /// How many names to generate
-    #[arg(short, long, default_value_t=1)]
+    #[arg(short, long, default_value_t=1, verbatim_doc_comment)]
     count: usize,
 
     /// Whether to write transitions to a file for better performance
     /// in the next run
     ///
     /// This flag requires you to specify the name of the file to
-    /// write to.
-    #[arg(short, long)]
+    /// write to. Note that the file extension should be `.zst`
+    /// but you are free to choose whatever you want.
+    #[arg(short, long, verbatim_doc_comment)]
     write_transitions: Option<String>,
 }
 
