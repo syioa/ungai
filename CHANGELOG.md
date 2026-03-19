@@ -2,6 +2,20 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.2.1 - 2026-03-19
+#### Performance Improvements
+- enable users to write transitions to a specified file - (86a83af) - syioa
+#### Documentation
+- (**cli**) improve help text - (1e20756) - syioa
+#### Build system
+- (**deps**) add zstd, serde, and bincode crates - (1d7db60) - syioa
+- (**deps**) remove rand_distr crate - (6e7f278) - syioa
+#### Miscellaneous Chores
+- include Installation and Usage sections in README - (603779d) - syioa
+- update README.md - (9637d20) - syioa
+
+- - -
+
 ## 0.2.0 - 2026-03-18
 #### Features
 - add cli support - (e7971ce) - syioa
