@@ -1,7 +1,11 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, fs, io::Write};
 use rand::distr::Distribution;
 use rand::distr::weighted::WeightedIndex;
+use serde::{Serialize, Deserialize};
 
+
+
+#[derive(Serialize, Deserialize)]
 pub struct Markov {
     pub transitions: HashMap<(u8, u8), HashMap<u8, f64>>,
 }
@@ -56,6 +60,16 @@ impl Markov {
         }
 
         distributions
+    }
+
+    pub fn write_transitions_to_file(&self, file_name: &str) -> bincode::Result<()> {
+        let bytes = bincode::serialize(&self.transitions)?;
+
+        let compressed = zstd::encode_all(&bytes[..], 3)?;
+
+        let mut file = fs::File::create(file_name)?;
+        file.write_all(&compressed)?;
+        Ok(())
     }
 
     pub fn generate(&self, rng: &mut impl rand::Rng, distributions: &HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)>) -> String {
