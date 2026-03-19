@@ -1,30 +1,29 @@
-use clap::{Parser};
+use clap::Parser;
 
 mod markov_chain;
 use markov_chain::order2;
-
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about=None)]
 struct Args {
     /// Defines how much smoothing to use for the Markov Chain
-    /// 
+    ///
     /// Higher Smoothing = More Creativity
     /// Lower Smoothing = More Accuracy
-    /// 
+    ///
     /// Remember that more accuracy with lower smoothing
     /// is entirely dependent on the quality of the provided dataset.
-    #[arg(short, long, default_value_t=0.0, verbatim_doc_comment)]
+    #[arg(short, long, default_value_t = 0.0, verbatim_doc_comment)]
     smoothing: f64,
 
     /// Weather to generate a name or not
     ///
     /// [default: false]
-    #[arg(short, long, default_value_t=false, verbatim_doc_comment)]
+    #[arg(short, long, default_value_t = false, verbatim_doc_comment)]
     generate: bool,
 
     /// How many names to generate
-    #[arg(short, long, default_value_t=1, verbatim_doc_comment)]
+    #[arg(short, long, default_value_t = 1, verbatim_doc_comment)]
     count: usize,
 
     /// Whether to write transitions to a file for better performance
@@ -49,19 +48,17 @@ fn main() -> Result<(), String> {
 
     let markov: order2::Markov;
     match args.read_transitions {
-        Some(file_name) => {
-            match order2::Markov::read_transitions_from(&file_name) {
-                Ok(data) => markov = data,
-                Err(e) => {
-                    eprintln!("can't read from file due to the following error:");
-                    return Err(e.to_string());
-                }
+        Some(file_name) => match order2::Markov::read_transitions_from(&file_name) {
+            Ok(data) => markov = data,
+            Err(e) => {
+                eprintln!("can't read from file due to the following error:");
+                return Err(e.to_string());
             }
         },
         None => {
             let names = vec!["alice", "alina", "alex", "anna", "amelia", "aria"];
             markov = order2::Markov::train(&names, args.smoothing);
-        },
+        }
     }
 
     // write transitions to a file
@@ -82,7 +79,9 @@ fn main() -> Result<(), String> {
         let mut i = 0;
         let mut reruns = 0;
         while i < args.count {
-            if reruns >= 10 { break };
+            if reruns >= 10 {
+                break;
+            };
 
             let name = markov.generate(&mut rng, &distributions);
 

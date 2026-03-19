@@ -1,9 +1,7 @@
-use std::{collections::HashMap, fs, io::Write};
 use rand::distr::Distribution;
 use rand::distr::weighted::WeightedIndex;
-use serde::{Serialize, Deserialize};
-
-
+use serde::{Deserialize, Serialize};
+use std::{collections::HashMap, fs, io::Write};
 
 #[derive(Serialize, Deserialize)]
 pub struct Markov {
@@ -36,7 +34,9 @@ impl Markov {
 
                 p1 = p2;
                 p2 = current;
-                if current == b'$' { break; }
+                if current == b'$' {
+                    break;
+                }
             }
         }
         Self { transitions }
@@ -81,7 +81,11 @@ impl Markov {
         Ok(data)
     }
 
-    pub fn generate(&self, rng: &mut impl rand::Rng, distributions: &HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)>) -> String {
+    pub fn generate(
+        &self,
+        rng: &mut impl rand::Rng,
+        distributions: &HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)>,
+    ) -> String {
         let mut result = String::new();
         let mut p1 = b'^';
         let mut p2 = b'^';
@@ -93,7 +97,9 @@ impl Markov {
             };
             let next = choices[dist.sample(rng)];
 
-            if next == b'$' { break; }
+            if next == b'$' {
+                break;
+            }
 
             result.push(next as char);
             p1 = p2;
