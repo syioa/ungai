@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.3.0 - 2026-03-19
+#### Features
+- enable users to provide their own list of names - (c1d5017) - syioa
+- enable users to provide their compressed transitions file - (61829d4) - syioa
+#### Style
+- fix styling - (3743382) - syioa
+
+- - -
+
 ## 0.2.1 - 2026-03-19
 #### Performance Improvements
 - enable users to write transitions to a specified file - (86a83af) - syioa
