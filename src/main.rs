@@ -1,6 +1,7 @@
-use clap::Parser;
-
 mod markov_chain;
+mod utils;
+
+use clap::Parser;
 use markov_chain::order2;
 
 #[derive(Parser, Debug)]
@@ -41,6 +42,18 @@ struct Args {
     /// which contains the data.
     #[arg(short, long, verbatim_doc_comment)]
     read_transitions: Option<String>,
+
+    /// Provide a file from which to train the model
+    ///
+    /// The provided file must be a `.txt` or `.csv`
+    /// which should just contain the names on which to
+    /// train the model and should only contain newlines,
+    /// and commas as separators.
+    /// One thing to note here is that more priority
+    /// is given to commas, i.e. only commas are necessary
+    /// for separating different names.
+    #[arg(short, long, verbatim_doc_comment)]
+    train_from_file: Option<String>,
 }
 
 fn main() -> Result<(), String> {
@@ -56,7 +69,28 @@ fn main() -> Result<(), String> {
             }
         },
         None => {
-            let names = vec!["alice", "alina", "alex", "anna", "amelia", "aria"];
+            let names = match args.train_from_file {
+                Some(file_name) => utils::parse_file(&file_name).unwrap_or_else(|err| {
+                    eprintln!("can't read from the file due to the following error: {err}");
+                    eprintln!("reverting back to the default names list");
+                    vec![
+                        "alice".to_string(),
+                        "alina".to_string(),
+                        "alex".to_string(),
+                        "anna".to_string(),
+                        "amelia".to_string(),
+                        "aria".to_string(),
+                    ]
+                }),
+                None => vec![
+                    "alice".to_string(),
+                    "alina".to_string(),
+                    "alex".to_string(),
+                    "anna".to_string(),
+                    "amelia".to_string(),
+                    "aria".to_string(),
+                ],
+            };
             markov = order2::Markov::train(&names, args.smoothing);
         }
     }

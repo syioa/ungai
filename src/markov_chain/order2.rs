@@ -9,7 +9,7 @@ pub struct Markov {
 }
 
 impl Markov {
-    pub fn train(names: &[&str], smoothing: f64) -> Self {
+    pub fn train(names: &[String], smoothing: f64) -> Self {
         let mut transitions: HashMap<(u8, u8), HashMap<u8, f64>> = HashMap::new();
 
         for name in names {
