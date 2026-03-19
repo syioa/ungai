@@ -42,16 +42,17 @@ impl Markov {
         Self { transitions }
     }
 
-    pub fn precompute_distributions(&self) -> HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)> {
+    pub fn precompute_distributions(&self, smoothing: f64) -> HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)> {
         let mut distributions = HashMap::new();
 
         for (&state, inner_counts) in &self.transitions {
             let mut choices = Vec::new();
             let mut weights = Vec::new();
 
-            for (&c, &weight) in inner_counts {
+            for c in b'a'..=b'z' {
+                let count = inner_counts.get(&c).copied().unwrap_or(0.0);
                 choices.push(c);
-                weights.push(weight);
+                weights.push(count + smoothing);
             }
 
             if let Ok(dist) = WeightedIndex::new(weights) {

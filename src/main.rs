@@ -105,7 +105,7 @@ fn main() -> Result<(), String> {
 
     // generate a name/names
     if args.generate {
-        let distributions = markov.precompute_distributions();
+        let distributions = markov.precompute_distributions(args.smoothing);
         let mut rng = rand::rng();
 
         let mut generated_names = Vec::with_capacity(args.count);
