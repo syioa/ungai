@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.6.0 - 2026-03-20
+#### Features
+- add min and max length for names via cli arguments - (5cd9e87) - syioa
+- add another default dataset which is big - (9575fe2) - syioa
+#### Documentation
+- include FAQs - (446a651) - syioa
+#### Build system
+- (**deps**) add reqwest and dirs crates - (8a2c331) - syioa
+#### Miscellaneous Chores
+- include a default dataset - (144bddb) - syioa
+
+- - -
+
 ## 0.5.0 - 2026-03-20
 #### Features
 - add temperature scaling to generate creative names - (9dec0d7) - syioa
