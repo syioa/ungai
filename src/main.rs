@@ -72,6 +72,10 @@ struct Args {
     /// The minimum length a name can have
     #[arg(long, default_value_t=2)]
     min: u8,
+
+    /// Number of allowed reruns to generate a single name
+    #[arg(long, default_value_t=10)]
+    rerun: usize,
 }
 
 fn main() -> Result<(), String> {
@@ -146,7 +150,7 @@ fn main() -> Result<(), String> {
         let mut i = 0;
         let mut reruns = 0;
         while i < args.count {
-            if reruns >= 10 {
+            if reruns >= args.rerun {
                 break;
             };
 
