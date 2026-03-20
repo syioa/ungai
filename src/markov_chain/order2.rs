@@ -45,7 +45,11 @@ impl Markov {
         Self { transitions }
     }
 
-    pub fn precompute_distributions(&self, smoothing: f64, temperature: f64) -> HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)> {
+    pub fn precompute_distributions(
+        &self,
+        smoothing: f64,
+        temperature: f64,
+    ) -> HashMap<(u8, u8), (Vec<u8>, WeightedIndex<f64>)> {
         let mut distributions = HashMap::new();
 
         for (&state, inner_counts) in &self.transitions {

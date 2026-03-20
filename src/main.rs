@@ -52,22 +52,27 @@ struct Args {
     /// One thing to note here is that more priority
     /// is given to commas, i.e. only commas are necessary
     /// for separating different names.
-    #[arg(short='f', long, verbatim_doc_comment)]
+    #[arg(short = 'f', long, verbatim_doc_comment)]
     train_from_file: Option<String>,
 
     /// Provide temperature scaling for further creativity of the model
-    /// 
+    ///
     /// This is similar to `smoothing`
     /// Temperature Scaling works in the following way-
     /// temperature > 1.0: More Creative/Random Names
     /// temperature < 1.0: More Predictable/Repetitive Names
     /// temperature = 1.0: No change
-    #[arg(short='t', long, default_value_t=1.0, verbatim_doc_comment)]
-    temperature: f64
+    #[arg(short = 't', long, default_value_t = 1.0, verbatim_doc_comment)]
+    temperature: f64,
 }
 
 fn main() -> Result<(), String> {
     let args = Args::parse();
+
+    if let Err(e) = utils::download_precomputed_dataset() {
+        eprintln!("error downloading precomputed dataset: {e}");
+        return Err(e.to_string());
+    };
 
     let markov: order2::Markov;
     match args.read_transitions {
@@ -82,7 +87,7 @@ fn main() -> Result<(), String> {
             let names = match args.train_from_file {
                 Some(file_name) => utils::parse_file(&file_name).unwrap_or_else(|err| {
                     eprintln!("can't read from the file due to the following error: {err}");
-                    eprintln!("reverting back to the default names list");
+                    eprintln!("reverting back to the default (very small) names list");
                     vec![
                         "alice".to_string(),
                         "alina".to_string(),
@@ -92,16 +97,26 @@ fn main() -> Result<(), String> {
                         "aria".to_string(),
                     ]
                 }),
-                None => vec![
-                    "alice".to_string(),
-                    "alina".to_string(),
-                    "alex".to_string(),
-                    "anna".to_string(),
-                    "amelia".to_string(),
-                    "aria".to_string(),
-                ],
+                None => {
+                    vec!["nothing".to_string()]
+                }
             };
-            markov = order2::Markov::train(&names);
+
+            if names.len() == 1 && names[0] == "nothing" {
+                markov = match order2::Markov::read_transitions_from(
+                    utils::get_default_dataset_path()
+                        .to_str()
+                        .expect("invalid path"),
+                ) {
+                    Ok(data) => data,
+                    Err(e) => {
+                        eprintln!("can't read from file due to the following error:");
+                        return Err(e.to_string());
+                    }
+                }
+            } else {
+                markov = order2::Markov::train(&names);
+            }
         }
     }
 
