@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.5.0 - 2026-03-20
+#### Features
+- add temperature scaling to generate creative names - (9dec0d7) - syioa
+- normalize probabilities - (7c66b91) - syioa
+- add smoothing to precompute_distributions - (021f023) - syioa
+#### Bug Fixes
+- remove smoothing from train function - (e85f9c5) - syioa
+
+- - -
+
 ## 0.3.0 - 2026-03-19
 #### Features
 - enable users to provide their own list of names - (c1d5017) - syioa
