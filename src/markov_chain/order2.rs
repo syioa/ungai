@@ -9,7 +9,7 @@ pub struct Markov {
 }
 
 impl Markov {
-    pub fn train(names: &[String], smoothing: f64) -> Self {
+    pub fn train(names: &[String]) -> Self {
         let mut transitions: HashMap<(u8, u8), HashMap<u8, f64>> = HashMap::new();
 
         for name in names {
@@ -21,16 +21,10 @@ impl Markov {
             for &current in bytes.iter().chain(std::iter::once(&b'$')) {
                 transitions
                     .entry((p1, p2))
-                    .or_insert_with(|| {
-                        let mut m = HashMap::new();
-                        for c in b'a'..=b'z' {
-                            m.insert(c, smoothing);
-                        }
-                        m
-                    })
+                    .or_default()
                     .entry(current)
                     .and_modify(|count| *count += 1.0)
-                    .or_insert(1.0 + smoothing);
+                    .or_insert(1.0);
 
                 p1 = p2;
                 p2 = current;

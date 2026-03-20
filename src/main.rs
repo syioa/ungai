@@ -91,7 +91,7 @@ fn main() -> Result<(), String> {
                     "aria".to_string(),
                 ],
             };
-            markov = order2::Markov::train(&names, args.smoothing);
+            markov = order2::Markov::train(&names);
         }
     }
 
