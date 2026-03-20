@@ -52,8 +52,18 @@ struct Args {
     /// One thing to note here is that more priority
     /// is given to commas, i.e. only commas are necessary
     /// for separating different names.
-    #[arg(short, long, verbatim_doc_comment)]
+    #[arg(short='f', long, verbatim_doc_comment)]
     train_from_file: Option<String>,
+
+    /// Provide temperature scaling for further creativity of the model
+    /// 
+    /// This is similar to `smoothing`
+    /// Temperature Scaling works in the following way-
+    /// temperature > 1.0: More Creative/Random Names
+    /// temperature < 1.0: More Predictable/Repetitive Names
+    /// temperature = 1.0: No change
+    #[arg(short='t', long, default_value_t=1.0, verbatim_doc_comment)]
+    temperature: f64
 }
 
 fn main() -> Result<(), String> {
@@ -105,7 +115,7 @@ fn main() -> Result<(), String> {
 
     // generate a name/names
     if args.generate {
-        let distributions = markov.precompute_distributions(args.smoothing);
+        let distributions = markov.precompute_distributions(args.smoothing, args.temperature);
         let mut rng = rand::rng();
 
         let mut generated_names = Vec::with_capacity(args.count);
