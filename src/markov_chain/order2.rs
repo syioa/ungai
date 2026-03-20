@@ -39,6 +39,15 @@ impl Markov {
                 }
             }
         }
+
+        // normalize probabilities
+        for counts in transitions.values_mut() {
+            let sum: f64 = counts.values().sum();
+            for val in counts.values_mut() {
+                *val /= sum;
+            }
+        }
+
         Self { transitions }
     }
 
