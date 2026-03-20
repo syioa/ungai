@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.6.1 - 2026-03-20
+#### Features
+- add rerun argument to specify total number of reruns to generate a single name - (a760375) - syioa
+
+- - -
+
 ## 0.6.0 - 2026-03-20
 #### Features
 - add min and max length for names via cli arguments - (5cd9e87) - syioa
