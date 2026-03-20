@@ -64,6 +64,14 @@ struct Args {
     /// temperature = 1.0: No change
     #[arg(short = 't', long, default_value_t = 1.0, verbatim_doc_comment)]
     temperature: f64,
+
+    /// The maximum length a name can have
+    #[arg(long, default_value_t=10)]
+    max: u8,
+
+    /// The minimum length a name can have
+    #[arg(long, default_value_t=2)]
+    min: u8,
 }
 
 fn main() -> Result<(), String> {
@@ -145,6 +153,14 @@ fn main() -> Result<(), String> {
             let name = markov.generate(&mut rng, &distributions);
 
             if generated_names.contains(&name) {
+                reruns += 1;
+                continue;
+            }
+            if name.len() as u8 > args.max {
+                reruns += 1;
+                continue;
+            }
+            if (name.len() as u8) < args.min {
                 reruns += 1;
                 continue;
             }
