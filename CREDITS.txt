@@ -1,0 +1,22 @@
+================================================================                
+                DATASET CREDITS & LICENSING
+================================================================
+
+SOURCE:
+US Social Security Administration (SSA) Baby Names
+- Official URL: https://www.ssa.gov/oact/babynames/limits.html
+
+LICENSE:
+- Public Domain (U.S. Government Work)
+- This data is not subject to copyright protection in the 
+  United States and is provided here for global use under 
+  public domain principles.
+
+PROCESSING:
+- Raw data was merged and deduplicated to create a 
+  statistical training seed for this Markov model.
+
+----------------------------------------------------------------
+The software and its associated documentation are licensed 
+under the MIT License.
+----------------------------------------------------------------
